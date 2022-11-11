@@ -27,6 +27,13 @@ public class RobotContainer {
   public double getDriverLeftStickX(){
     return m_joystick.getLeftX();
   }
+  public boolean getLeftBumperPressed(){
+    return m_joystick.getLeftBumperPressed();
+  }
+  public boolean getRightBumperPressed(){
+    return m_joystick.getRightBumperPressed();
+  }
+
 
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();

@@ -4,22 +4,27 @@
 
 package frc.robot.commands;
 
+import frc.robot.Robot;
+import frc.robot.subsystems.driveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.driveTrain;
+
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class TeleopDrive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Drivetrain drivetrain;
+  private final driveTrain drivetrain;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public TeleopDrive(Drivetrain driveTrain) {
-    this.driveTrain=driveTrain;;
+  public TeleopDrive(driveTrain driveTrain) {
+    this.drivetrain=driveTrain;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
   }
@@ -30,7 +35,16 @@ public class TeleopDrive extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+      Robot.m_robotContainer.getDriverLeftTrigger();
+    if(Robot.m_robotContainer.getRightBumperPressed()){
+        drivetrain.frontRight.set(TalonFXControlMode.PercentOutput,-Robot.m_robotContainer.getDriverRightTrigger());}
+    else{drivetrain.frontLeft.set(TalonFXControlMode.PercentOutput,Robot.m_robotContainer.getDriverLeftTrigger());}
+    if(Robot.m_robotContainer.getLeftBumperPressed()){
+        drivetrain.frontRight.set(TalonFXControlMode.PercentOutput,-Robot.m_robotContainer.getDriverLeftTrigger());}
+    else{      
+      drivetrain.frontRight.set(TalonFXControlMode.PercentOutput,Robot.m_robotContainer.getDriverRightTrigger());}
+  }
 
   // Called once the command ends or is interrupted.
   @Override
